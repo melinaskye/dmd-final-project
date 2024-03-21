@@ -15,11 +15,16 @@ const config = {
     secret: process.env.AUTH0_SECRET,
     baseURL: process.env.SITE_URL || 'http://localhost:3000',
     clientID: process.env.AUTH0_CLIENT_ID,
-    issuerBaseURL: 'https://bdaley.auth0.com'
+    issuerBaseURL: 'https://dev-0431qwn0ac7ioiyt.us.auth0.com'
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
 
 
 // Configure Nunjucks
